@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ test.title }} {% endblock %}
+
+{% block content %}
+<main class="container">
+    <div class="bg-body-tertiary p-5 rounded">
+        {% if messages %}
+        {% for mess in messages %}
+        {% if mess.tags == 'error' %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          {{ mess }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% else %}
+        <div class="alert alert-{{ mess.tags }} alert-dismissible fade show" role="alert">
+          {{ mess }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        <h1>{{ test.title }}</h1>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Test vaqti</th>
+                <td scope="col">{{ test.duration }} minut</td>
+              </tr>
+              <tr>
+                <th scope="col">Savollar soni</th>
+                <td scope="col">20 ta</td>
+              </tr>
+              <tr>
+                <th scope="col">Urinishlar soni</th>
+                <td scope="col">{{ test.attempts_allowed }} marta</td>
+              </tr>
+            </thead>
+          </table>
+        <a class="btn btn-lg btn-primary" href="{% url 'quiz:test_page' test.id %}" role="button">Boshlash &raquo;</a>
+    </div>
+</main>
+{% endblock %}
