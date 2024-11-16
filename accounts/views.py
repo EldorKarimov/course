@@ -46,3 +46,6 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('quiz:home')
+
+def main_dashboard(request):
+    return render(request, 'dashboards/main.html')

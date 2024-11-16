@@ -10,6 +10,7 @@ User = get_user_model()
 
 class Test(BaseModel):
     title = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True, verbose_name="description")
     duration = models.IntegerField(help_text="Testning davomiyligi daqiqalarda", verbose_name=_("duration"))
     attempts_allowed = models.IntegerField(help_text="Testni necha marta yechishga ruxsat beriladi", verbose_name=_("attemps allowed"))
     image = models.ImageField(upload_to='media/test/images', verbose_name=_("image"))
@@ -27,7 +28,7 @@ class Test(BaseModel):
         questions = Question.objects.filter(test = self, is_available = True)
         questions = list(questions)
         try:
-            random.sample(questions, self.number_of_questions)
+            questions = random.sample(questions, self.number_of_questions)
             return questions
         except Exception as e:
             return None
@@ -74,6 +75,11 @@ class UserAttempt(BaseModel):
         minutes = int(total_seconds // 60)
         seconds = int(total_seconds % 60)
         return f"{minutes} minut {seconds} sekund"
+    
+    @property
+    def get_total(self):
+        total = round(self.score *100 / self.test.number_of_questions, 2)
+        return total
 
 class UserAnswer(BaseModel):
     attempt = models.ForeignKey(UserAttempt, related_name="user_answers", on_delete=models.CASCADE)

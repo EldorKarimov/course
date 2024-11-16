@@ -3,8 +3,8 @@
 {% block title %} Result Page {% endblock %}
 
 {% block content %}
-<main class="container">
-    <div class="bg-body-tertiary p-5 rounded">
+<main class="page-content">
+    <div class="page-fluid">
         <h1>{{ request.user.get_full_name }} - Test natijalari</h1>
         <table class="table">
             <thead>
@@ -24,9 +24,13 @@
                 <th scope="col">To'g'ri javoblar soni</th>
                 <td scope="col">{{ correct_answers_count }} ta</td>
               </tr>
+              <tr>
+                <th scope="col">Ball</th>
+                <td scope="col">{{ attempt.score }}</td>
+              </tr>
             </thead>
           </table>
-        <a class="btn btn-lg btn-primary" href="#" role="button">Natijalar &raquo;</a>
+        <a class="btn btn-lg btn-primary" href="{% url 'quiz:results' %}" role="button">Natijalar &raquo;</a>
     </div>
 </main>
 {% endblock %}

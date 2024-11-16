@@ -1,47 +1,50 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %} Bosh Sahifa {% endblock %}
 
 {% block content %}
-<section class="py-5 text-center container">
-    <div class="row py-lg-5">
-        <div class="col-lg-6 col-md-8 mx-auto">
-            <h1 class="fw-light">Eldor Karimov</h1>
-            <p class="lead text-body-secondary">Ushbu sayt o'quvchilardan test olish uchun ishlab chiqildi. <br>
-                <span class="text-danger">sayt test rejimida ishlamoqda</span>
-            </p>
-            
+<div class="page-content">
+    <div class="container-fluid">
+
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                    <h4 class="mb-sm-0 font-size-18">Testlar</h4>
+
+                    <div class="page-title-right">
+                        <ol class="breadcrumb m-0">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">UI Elements</a></li>
+                            <li class="breadcrumb-item active">Cards</li>
+                        </ol>
+                    </div>
+
+                </div>
+            </div>
         </div>
-    </div>
-</section>
 
-<div class="album py-5 bg-body-tertiary">
-    <div class="container">
-
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="row">
             {% for test in tests %}
-            <div class="col">
-                <div class="card shadow-sm">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                        xmlns="{{ test.image.url }}" role="img" aria-label="Placeholder: Thumbnail"
-                        preserveAspectRatio="xMidYMid slice" focusable="false">
-                        <title>Placeholder</title>
-                        <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef"
-                            dy=".3em">Thumbnail</text>
-                    </svg>
+            <div class="col-md-6 col-xl-3">
+        
+                <div class="card">
+                    <img class="card-img-top img-fluid" src="{{ test.image.url }}" alt="Card image cap">
                     <div class="card-body">
-                        <p class="card-text">{{ test.title }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a href="{{ test.get_url }}" class="btn btn-sm btn-outline-secondary">Ko'rish</a>
-                            </div>
-                            <small class="text-body-secondary"> {{ test.duration}} minut</small>
-                        </div>
+                        <h4 class="card-title">{{ test.title }}</h4>
+                        <p class="card-text"> {{ test.description }} </p>
+                    </div>
+                    <div class="card-body">
+                        <a href="{{ test.get_url }}" class="btn btn-outline-primary">Ko'rish</a>
+                        
                     </div>
                 </div>
+
             </div>
             {% endfor %}
         </div>
     </div>
 </div>
+
+
 {% endblock %}

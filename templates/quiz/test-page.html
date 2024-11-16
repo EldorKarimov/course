@@ -4,86 +4,61 @@
 {% block title %} Test Sahifasi {% endblock %}
 
 {% block content %}
-<div class="for-background" style="background-color: rgb(230, 235, 235); width: 100%; min-height: 1000px; padding: 20px 0;">
-    <div class="container mt-5" style="width: 70%; background-color: rgb(245, 251, 251); border-radius: 10px; padding: 30px;">
-        <h2 class="text-center mb-4">Test Page</h2>
-        <div class="text-end mb-3">
-            <span class="timer" id="timer">Tugash vaqti: {{ test.duration }}</span>
-        </div>
-        <form id="quizForm" method="post">
-            {% csrf_token %}
-            {% for question in test.get_questions %}
-            <div class="mb-3">
-                <label class="form-label">{{ forloop.counter }}. {{ question.name }}</label>
-                {% for answer in question.get_answers %}
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="{{ question.id }}" id="{{ answer.id }}" value="{{ answer.id }}">
-                    <label class="form-check-label" for="{{ answer.id }}">{{ answer.name }}</label>
+<div class="page-content">
+    <div class="container-fluid">
+
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                    <h4 class="mb-sm-0 font-size-18">Test Sahifasi</h4>
+
                 </div>
-                {% endfor %}
             </div>
-            {% endfor %}
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-xl-9">
+                <div class="card">
+                    <div class="card-body">
+                        <h1>{{ test.title }}</h1>
+                        <form method="post" class="row mt-4">
+                            {% csrf_token %}
+                            {% for question in test.get_questions %}
+                            <div class="mb-3">
+                                <label>{{ forloop.counter }}. {{ question.name }}</label>
+                                {% for answer in question.get_answers %}
+                                <div>
+                                    <input type="radio" name="{{ question.id }}" id="{{ answer.id }}" value="{{ answer.id }}">
+                                    <label for="{{ answer.id }}">{{ answer.name }}</label>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+                            
+                            <div class="col-sm-6">
+                                <div class="text-sm-end mt-2 mt-sm-0">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="mdi mdi-share-all me-1"></i> Yakunlash </button>
+                                </div>
+                            </div> <!-- end col -->
+                        </form> <!-- end row-->
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Card Details</h5>
+                        
+                    </div>
+                 </div>
+                 
+            </div>
+        </div>
+        <!-- end row -->
+
+    </div> <!-- container-fluid -->
 </div>
-
-<!-- Bootstrap JS and dependencies -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-
-<!-- <script>
-    // Timer setup
-    var initialTime = 60; // 60 seconds
-    var timerElement = document.getElementById("timer");
-
-    // Load the start time from localStorage or set it to the current time
-    var startTime = localStorage.getItem("startTime") ? parseInt(localStorage.getItem("startTime")) : Date.now();
-    
-    // Calculate the remaining time
-    var elapsedTime = Math.floor((Date.now() - startTime) / 1000);
-    var timeLeft = initialTime - elapsedTime;
-
-    if (timeLeft <= 0) {
-        timeLeft = 0;
-    }
-
-    // Update the timer every second
-    var timerInterval = setInterval(function() {
-        var minutes = Math.floor(timeLeft / 60);
-        var seconds = timeLeft % 60;
-        timerElement.textContent = "Tugash vaqti: " + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-        timeLeft--;
-
-        // Save the start time to localStorage if it doesn't exist
-        if (!localStorage.getItem("startTime")) {
-            localStorage.setItem("startTime", startTime);
-        }
-
-        if (timeLeft < 0) {
-            clearInterval(timerInterval);
-            alert("Time is up!");
-            // Automatically submit the form when time is up
-            document.getElementById("quizForm").submit();
-            // Clear the startTime from localStorage after submission
-            localStorage.removeItem("startTime");
-        }
-    }, 1000);
-
-    // Form submission handler
-    document.getElementById("quizForm").addEventListener("submit", function(event) {
-        event.preventDefault();
-        clearInterval(timerInterval);
-        alert("Test submitted successfully!");
-        // Clear startTime from localStorage on submission
-        localStorage.removeItem("startTime");
-    });
-
-    // Clear the startTime from localStorage if the page is closed or refreshed
-    window.addEventListener("beforeunload", function() {
-        localStorage.removeItem("startTime");
-    });
-</script> -->
-
-
 {% endblock %}

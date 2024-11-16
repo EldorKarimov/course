@@ -47,6 +47,7 @@ class TestPageView(LoginRequiredMixin, View):
         test = get_object_or_404(Test, id = test_id)
         attempt = UserAttempt.objects.filter(user = request.user, test = test).last()
         score = 0
+        correct_answers_count = 0
         for question in test.get_questions:
             selected_answer_id = request.POST.get(str(question.id))
             if selected_answer_id:
@@ -60,11 +61,11 @@ class TestPageView(LoginRequiredMixin, View):
                 user_answer.save()
                 if selected_answer.is_correct:
                     score += question.mark
+                    correct_answers_count += 1
         attempt.score = score
         attempt.time_taken = timezone.now() - attempt.created
         attempt.save()
 
-        correct_answers_count = 5
         context = {
             "test":test,
             "attempt":attempt,
