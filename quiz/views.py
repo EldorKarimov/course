@@ -46,6 +46,8 @@ class TestPageView(LoginRequiredMixin, View):
     def post(self, request, test_id):
         test = get_object_or_404(Test, id = test_id)
         attempt = UserAttempt.objects.filter(user = request.user, test = test).last()
+        if attempt.is_completed:
+            return http.HttpResponse("Siz allaqachon testni tugatgansiz")
         score = 0
         correct_answers_count = 0
         for question in test.get_questions:
@@ -64,6 +66,7 @@ class TestPageView(LoginRequiredMixin, View):
                     correct_answers_count += 1
         attempt.score = score
         attempt.time_taken = timezone.now() - attempt.created
+        attempt.is_completed = True
         attempt.save()
 
         context = {
@@ -72,7 +75,7 @@ class TestPageView(LoginRequiredMixin, View):
             "correct_answers_count":correct_answers_count
         }
             
-        return render(request, "quiz/result.html", context)
+        return redirect('quiz:result_detail', attempt.id)
     
 class ResultsListView(LoginRequiredMixin, View):
     def get(self, request):

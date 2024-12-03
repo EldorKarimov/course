@@ -22,4 +22,4 @@ class QuestionAdmin(admin.ModelAdmin):
 
 
 
-admin.site.register([UserAttempt, UserAnswer])
+admin.site.register([UserAttempt, UserAnswer, Science])

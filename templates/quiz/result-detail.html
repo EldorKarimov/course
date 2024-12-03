@@ -28,11 +28,11 @@
                         <h3>Natijalar</h3>
                         <ul>
                             <li><b>Imtihon:</b> {{ attempt.test.title }} </li>
+                            <li><b>O'qituvchi:</b> {{ attempt.test.science.teacher.get_full_name }} </li>
                             <li><b>O'quvchi:</b> {{ attempt.user.get_full_name}} </li>
                             <li><b>Sinf:</b> {{ attempt.user.pupil.pupil_class }} </li>
-                            <li><b>Boshladi:</b> {{ attempt.created }} </li>
-                            <li><b>Tugatdi:</b> {{ attempt.date_taken }} </li>
-                            <li><b>To‘g‘ri:</b> {{ attempt.score }}</li>
+                            <li><b>Testga ketgan vaqt:</b> {{ attempt.get_time_taken }} </li>
+                            <li><b>To'g'ri:</b> {{ attempt.score }}</li>
                             <li><b>Foiz:</b> {{ attempt.get_total }}%</li>
                         </ul>
                         <button class=".result-button" onclick="window.print()">Chop etish</button>

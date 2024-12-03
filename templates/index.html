@@ -32,7 +32,7 @@
                     <img class="card-img-top img-fluid" src="{{ test.image.url }}" alt="Card image cap">
                     <div class="card-body">
                         <h4 class="card-title">{{ test.title }}</h4>
-                        <p class="card-text"> {{ test.description }} </p>
+                        <p class="card-text"> {{ test.description|slice:":50" }}... </p>
                     </div>
                     <div class="card-body">
                         <a href="{{ test.get_url }}" class="btn btn-outline-primary">Ko'rish</a>

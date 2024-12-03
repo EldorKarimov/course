@@ -8,9 +8,17 @@ from datetime import datetime
 
 User = get_user_model()
 
+class Science(BaseModel):
+    teacher = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=128, verbose_name=_("name"))
+
+    def __str__(self):
+        return self.name
+
 class Test(BaseModel):
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True, verbose_name="description")
+    science = models.ForeignKey(Science, on_delete=models.CASCADE)
     duration = models.IntegerField(help_text="Testning davomiyligi daqiqalarda", verbose_name=_("duration"))
     attempts_allowed = models.IntegerField(help_text="Testni necha marta yechishga ruxsat beriladi", verbose_name=_("attemps allowed"))
     image = models.ImageField(upload_to='media/test/images', verbose_name=_("image"))
@@ -65,6 +73,7 @@ class UserAttempt(BaseModel):
     score = models.IntegerField()
     time_taken = models.DurationField()
     date_taken = models.DateTimeField(auto_now_add=True)
+    is_completed = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.user.get_full_name}-{self.test.title}"
@@ -89,3 +98,4 @@ class UserAnswer(BaseModel):
 
     def __str__(self):
         return f"{self.question.name}-{self.attempt.score}"
+    
